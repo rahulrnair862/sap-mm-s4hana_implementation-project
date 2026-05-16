@@ -1,17 +1,18 @@
 # 🥿 SAP S/4HANA MM Implementation Project
+
 ### RR Footwear Pvt Ltd (RRPL) — End-to-End Materials Management
 
-![SAP](https://img.shields.io/badge/SAP-S%2F4HANA-0FAAFF?style=for-the-badge&logo=sap&logoColor=white)
-![Module](https://img.shields.io/badge/Module-Materials%20Management-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)
-![P2P Cycles](https://img.shields.io/badge/P2P%20Cycles-3%20Completed-blue?style=for-the-badge)
+[![SAP](https://img.shields.io/badge/SAP-S%2F4HANA-0FAAFF?style=for-the-badge&logo=sap&logoColor=white)](https://www.sap.com)
+[![Module](https://img.shields.io/badge/Module-Materials%20Management-green?style=for-the-badge)](https://www.sap.com)
+[![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)](https://www.sap.com)
+[![P2P Cycles](https://img.shields.io/badge/P2P%20Cycles-4%20Completed-blue?style=for-the-badge)](https://www.sap.com)
 
 ---
 
 ## 🏢 Company Overview
 
 | Field | Details |
-|-------|---------|
+|---|---|
 | **Company Name** | RR Pvt Ltd |
 | **Company Code** | RRPL |
 | **Industry** | Footwear Manufacturing & Distribution |
@@ -25,7 +26,7 @@
 ## 🏭 Plant Structure
 
 | Plant Code | Plant Name | Location | Specialization |
-|-----------|-----------|----------|---------------|
+|---|---|---|---|
 | **RR01** | RR Manufacturing PTA | Pathanamthitta, Kerala | General Footwear — Main Plant |
 | **RR02** | RR Manufacturing Kochi | Kochi, Kerala | Specialty Shoes — Secondary Plant |
 
@@ -34,7 +35,7 @@
 ## 📦 Material Master Summary
 
 | Material | Description | Type | UoM | Price (₹) | Plant |
-|---------|-------------|------|-----|-----------|-------|
+|---|---|---|---|---|---|
 | RRRM001 | Leather Sheets — Upper Material | ROH | M2 | 850 | RR01 & RR02 |
 | RRRM002 | Rubber Compound — Sole Material | ROH | KG | 220 | RR01 & RR02 |
 | RRRM003 | EVA Foam — Insole Material | ROH | M2 | 180 | RR01 & RR02 |
@@ -57,15 +58,15 @@
 ## 🏪 Vendor Master
 
 | Vendor Code | Vendor Name | Location | Materials Supplied |
-|------------|------------|----------|-------------------|
+|---|---|---|---|
 | RRV001 | Kerala Leather Suppliers | Kannur, Kerala | RRRM001 |
-| RRV002 | South Indian Rubber Co | — | RRRM002 |
-| RRV003 | EVA Foam Industries | Coimbatore | RRRM003 |
-| RRV004 | Thread & Adhesive Suppliers | — | RRRM004 |
-| RRV005 | Packaging Suppliers | — | RRPM001, RRPM002, RRPM003 |
-| RRV006 | Leather Upper Subcon | — | RRMU001 |
-| RRV007 | Industrial Tools India | Bangalore | RRMRO01, RRMRO03 |
-| RRV008 | Industrial Lubricants Co | — | RRMRO02 |
+| RRV002 | South India Rubber Co | Kottayam, Kerala | RRRM002 |
+| RRV003 | EVA Foam Industries | Coimbatore, TN | RRRM003 |
+| RRV004 | Tamil Nadu Thread Co | Chennai, TN | RRRM004 |
+| RRV005 | National Packaging Ltd | Chennai, TN | RRPM001, RRPM002, RRPM003 |
+| RRV006 | Kerala Stitching Works | Pathanamthitta, Kerala | RRMU001 (Subcontracting) |
+| RRV007 | Industrial Tools India | Bangalore, KA | RRMRO01, RRMRO03 |
+| RRV008 | Kochi Lubricants Pvt Ltd | Kochi, Kerala | RRMRO02 (Consignment) |
 | RRV009 | Kerala Rubber Suppliers | Kottayam, Kerala | RRRM002 (RFQ Vendor) |
 
 ---
@@ -75,38 +76,75 @@
 ### ✅ Cycle 1 — Basic P2P (Plant RR01)
 
 | Step | T-Code | Document | Details |
-|------|--------|---------|---------|
+|---|---|---|---|
 | Purchase Requisition | ME51N | PR 102 | RRRM001, 100 M2, RR01 |
 | Purchase Order | ME21N | **PO 102** | RRV001 — Kerala Leather Suppliers |
 | Goods Receipt | MIGO | **Mat Doc 700198** | 100 M2, RM01, Mvt Type 101 |
 | Invoice Verification | MIRO | **Invoice 5105600827** | ₹83,300 INR |
+
+> 📅 Posted: 08.05.2026
 
 ---
 
 ### ✅ Cycle 2 — Basic P2P with Source Determination (Plant RR02)
 
 | Step | T-Code | Document | Details |
-|------|--------|---------|---------|
+|---|---|---|---|
 | Purchase Requisition | ME52N | PR 102 | RRRM001, 100 M2, RR02 — Source Det. |
-| Purchase Order | ME21N | **PO 104** | RRV001 — Kerala Leather Suppliers |
+| Purchase Order | ME21N | **PO 104** | RRV001 — Kerala Leather Suppliers, ₹850/M2 |
 | Goods Receipt | MIGO | **Mat Doc 700204** | 100 M2, RM02, Kochi Plant |
 | Invoice Verification | MIRO | **Invoice 5105600828** | ₹85,000 INR |
+
+> 📅 Posted: 08.05.2026
 
 ---
 
 ### ✅ Cycle 3 — P2P with RFQ & Quotation (Plant RR01)
 
 | Step | T-Code | Document | Details |
-|------|--------|---------|---------|
+|---|---|---|---|
 | Purchase Requisition | ME51N | PR | RRRM002, 200 KG, RR01 |
 | RFQ — Vendor 1 | ME41 | **RFQ 7000000555** | Sent to RRV002 |
 | RFQ — Vendor 2 | ME41 | **RFQ 7000000556** | Sent to RRV009 |
 | Maintain Quotations | ME47 | Both RFQs | RRV002: ₹220/KG \| RRV009: ₹210/KG |
-| Price Comparison | ME49 | Comparison List | **RRV009 — Rank 1 @ 98% (WINNER)** |
+| Price Comparison | ME49 | Comparison List | **RRV009 — Rank 1 @ ₹210/KG (WINNER)** |
 | Reject Quotation | ME47 | RFQ 7000000555 | RRV002 Rejected ❌ |
 | Purchase Order | ME21N | **PO 105** | RRV009 — Kerala Rubber Suppliers |
 | Goods Receipt | MIGO | **Mat Doc 700206** | 200 KG, RM01, Mvt Type 101 |
 | Invoice Verification | MIRO | **Invoice 5105600829** | ₹42,000 INR |
+
+> 📅 Posted: 08.05.2026
+
+---
+
+### ✅ Cycle 4 — Consignment Process (Plant RR01)
+
+> Vendor holds stock at RR01 premises. Payment is made only when material is withdrawn from consignment stock — not at GR.
+
+| Step | T-Code | Document | Details |
+|---|---|---|---|
+| Consignment PIR | ME11 | **PIR 6000000028** | RRV008 / RRMRO02 / RR01 — Info Cat: **K** (Consignment) |
+| Consignment PO | ME21N | **PO 8600000237** | RRV008 — Kochi Lubricants Pvt Ltd, Item Cat: **K** |
+| Goods Receipt | MIGO | **Mat Doc 7000000001** | 100 LT Machine Oil, Mvt Type **101 K** — Into Consignment Stock |
+| Consignment Withdrawal | MIGO | Transfer Posting **411 K** | **50 LT** withdrawn → Stock transferred to own (unrestricted) |
+| Invoice Verification | MIRO | IR posted | Payment only for 50 LT consumed (not full 100 LT) |
+
+**Key Master Data:**
+| Field | Value |
+|---|---|
+| Vendor | RRV008 — Kochi Lubricants Pvt Ltd |
+| Material | RRMRO02 — Machine Oil (Industrial Lubricant) |
+| Quantity Received | 100 LT (Consignment Stock) |
+| Quantity Withdrawn | 50 LT (Own Stock — liable to pay) |
+| Remaining Consignment | 50 LT (still vendor-owned, no payment yet) |
+
+**OBYC Account Determination:**
+| Transaction Key | G/L Account | Description |
+|---|---|---|
+| KON | 21110000 | Consignment Payables (Vendor liability on withdrawal) |
+| BSX (Val Class 3030) | 13100000 | Inventory — Operating Supplies |
+
+> 📅 Posted: 09.05.2026
 
 ---
 
@@ -133,19 +171,22 @@ RRPL (Company Code)
 ## 🔧 T-Codes Reference
 
 | T-Code | Description | Category |
-|--------|-------------|----------|
+|---|---|---|
 | SPRO | SAP Configuration | Basis |
+| OMS2 | Define Material Type Attributes | Customizing |
 | MM01 | Create Material Master | Master Data |
 | BP | Business Partner / Vendor Creation | Master Data |
 | ME11 | Create Purchase Info Record | Master Data |
 | ME01 | Maintain Source List | Master Data |
+| CS01 | Create Bill of Materials (BOM) | Master Data |
 | ME51N | Create Purchase Requisition | P2P |
 | ME21N | Create Purchase Order | P2P |
-| ME41 | Create Request for Quotation | P2P - RFQ |
-| ME47 | Maintain Quotation | P2P - RFQ |
-| ME49 | Price Comparison | P2P - RFQ |
-| MIGO | Goods Receipt | P2P |
+| ME41 | Create Request for Quotation | P2P — RFQ |
+| ME47 | Maintain Quotation | P2P — RFQ |
+| ME49 | Price Comparison | P2P — RFQ |
+| MIGO | Goods Receipt / Transfer Posting | P2P |
 | MIRO | Enter Incoming Invoice | P2P |
+| ME2O | SC Stock Monitoring (Subcontracting) | Subcontracting |
 | MMBE | Stock Overview | Reporting |
 | MB51 | Material Document List | Reporting |
 | ME2M | Purchase Orders by Material | Reporting |
@@ -185,12 +226,12 @@ sap-mm-s4hana_implementation-project/
 - [x] Vendor / BP Master Creation (9 Vendors)
 - [x] Purchase Info Records (PIR)
 - [x] Source List Configuration
-- [x] P2P Cycle 1 — Basic (RR01)
+- [x] P2P Cycle 1 — Basic P2P (RR01)
 - [x] P2P Cycle 2 — Basic with Source Determination (RR02)
 - [x] P2P Cycle 3 — RFQ & Quotation Process
-- [ ] P2P with Consignment Process
-- [ ] P2P with Subcontracting
-- [ ] Stock Transfer (RR01 → RR02)
+- [x] P2P Cycle 4 — Consignment Process
+- [ ] P2P Cycle 5 — Subcontracting Process
+- [ ] Stock Transfer Order (RR01 → RR02)
 - [ ] Physical Inventory
 - [ ] Reporting & Analytics
 
@@ -198,10 +239,10 @@ sap-mm-s4hana_implementation-project/
 
 ## 🛠️ Tech Stack
 
-![SAP S/4HANA](https://img.shields.io/badge/SAP%20S%2F4HANA-2023-0FAAFF?style=flat-square&logo=sap)
-![Module](https://img.shields.io/badge/MM-Materials%20Management-brightgreen?style=flat-square)
-![FI](https://img.shields.io/badge/FI-Financial%20Accounting-blue?style=flat-square)
-![CO](https://img.shields.io/badge/CO-Controlling-orange?style=flat-square)
+[![SAP S/4HANA](https://img.shields.io/badge/SAP%20S%2F4HANA-2023-0FAAFF?style=flat-square&logo=sap)](https://www.sap.com)
+[![Module](https://img.shields.io/badge/MM-Materials%20Management-brightgreen?style=flat-square)](https://www.sap.com)
+[![FI](https://img.shields.io/badge/FI-Financial%20Accounting-blue?style=flat-square)](https://www.sap.com)
+[![CO](https://img.shields.io/badge/CO-Controlling-orange?style=flat-square)](https://www.sap.com)
 
 ---
 
